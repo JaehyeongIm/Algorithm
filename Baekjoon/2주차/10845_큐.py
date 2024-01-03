@@ -6,7 +6,7 @@ printList = []
 for i in range(n):
     command = input().split()
     if command[0] == "push":
-        queue.append(command[1])
+        queue.append(int(command[1]))
     elif command[0] == "pop":
         if len(queue) == 0:
             printList.append(-1)
