@@ -10,7 +10,7 @@ for i in range(N):
         stack.append(count)
         count+=1
         opList.append('+')
-    if(stack[-1] == num):
+    if stack[-1] == num:
         stack.pop()
         opList.append('-')
     else:
