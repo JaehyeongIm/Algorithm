@@ -13,4 +13,4 @@ while len(dQ)>1: # n-1 O(n)
 
 
 if len(dQ)==1:
-    print(dQ[-1])
+    print(dQ[0])

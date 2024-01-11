@@ -20,9 +20,9 @@ for i in range(N):  # n
 
     dQ = deque(numbers)
     isReversed = False
-    for command in commandList:  # k
+    for command in commandList:  # O(k)
         if command == "R":
-            # dQ.reverse()  k가 걸려서 너무 오래걸림 (nk^2)
+            # dQ.reverse()  k가 걸려서 너무 오래걸림 O(k^2)
             if isReversed==False:
                 isReversed = True
             else:
@@ -39,7 +39,7 @@ for i in range(N):  # n
                 dQ.pop()
         else:
             output.append("command error")
-    if not isError:
+    if not isError: # O(k)
         if not isReversed:
             output.append("[" + ",".join(dQ) + "]")
         else:

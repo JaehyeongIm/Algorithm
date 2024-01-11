@@ -8,7 +8,7 @@ while True: # 입력 수:n 문자열 길이:m O(nm)
     if input == ".":
         break
     inputList = list(input)
-    # 처음 기호로 )이나 ]을 만나는 경우 flag 을 true로 설정하여 output에 no로 설정함.
+    # 스택이 비어있는데 )이나 ]을 만나는 경우나, stack에 제일 앞의 것과 대응되는 기호가 아닌 경우 flag 을 false로 설정하여 output에 no로 설정함.
     flag=True
 
     for char in inputList:
