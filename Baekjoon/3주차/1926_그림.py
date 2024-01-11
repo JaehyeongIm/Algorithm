@@ -20,24 +20,27 @@ def bfs(graph, a, b):
         for i in range(4):
             nx = x + dx[i]
             ny = y + dy[i]
+            # 그래프의 범위 안 벗어나게 하기
             if nx < 0 or nx >= n or ny < 0 or ny >= m:
                 continue
+
+            # 방문 노드에 1이 표시 되었을 떄
             if graph[nx][ny] == 1:
                 graph[nx][ny] = 0
+                #인접한 노드 추가
                 queue.append((nx, ny))
                 count += 1
     return count
 
-paint = []
+result = []
 for i in range(n):
     for j in range(m):
         if graph[i][j] == 1:
-            paint.append(bfs(graph, i, j))
+            result.append(bfs(graph, i, j))
 
-
-if len(paint) == 0:
-    print(len(paint))
+if len(result) == 0:
+    print(len(result))
     print(0)
 else:
-    print(len(paint))
-    print(max(paint))
+    print(len(result))
+    print(max(result))

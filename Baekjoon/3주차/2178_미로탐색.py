@@ -20,15 +20,17 @@ def bfs(x, y):
 
     while queue:
         x, y = queue.popleft()
-
+        # 노드에 대해 상하좌우 검색
         for i in range(4):
             nx = x + dx[i]
             ny = y + dy[i]
-
+            #그래프 범위 안에 있고 이웃값이 1일때
             if 0 <= nx < n and 0 <= ny < m and graph[nx][ny] == 1:
                 queue.append((nx, ny))
+                
+                # 거리 업데이트
                 graph[nx][ny] = graph[x][y] + 1
-
+    #최단 거리 리턴
     return graph[n-1][m-1]
 
 print(bfs(0,0))

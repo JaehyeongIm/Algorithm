@@ -9,10 +9,11 @@ for i in range(len(bar_razor)):
     else:
         if bar_razor[i-1] == '(':
             st.pop()
-            answer += len(st)
+            answer += len(st) # 스택에 남아있는 ( 다 더함
 
         else:
-            st.pop()
+            st.pop() 
+            # 해당 )를 스택에서 제거
             answer += 1
 
 print(answer)

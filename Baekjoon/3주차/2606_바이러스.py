@@ -9,11 +9,11 @@ for i in range(v):  # 그래프 생성
     graph[a] += [b]  # a에 b 연결
     graph[b] += [a]  # b에 a 연결 -> 양방향
 visited[1] = 1  # 1번 컴퓨터부터 시작이니 방문 표시
-Q = deque([1])
+Q = deque([1]) # 1부터 시작
 while Q:
     c = Q.popleft()
-    for nx in graph[c]:
-        if visited[nx] == 0:
-            Q.append(nx)
-            visited[nx] = 1
+    for node in graph[c]: #node : 인접한 노드
+        if visited[node] == 0: # 방문 안 됐을때
+            Q.append(node) # 인접 노드 추가
+            visited[node] = 1 # 방문 표시
 print(sum(visited) - 1)
