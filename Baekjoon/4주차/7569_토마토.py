@@ -19,7 +19,7 @@ dx = [-1, 1, 0, 0, 0, 0]
 dy = [0, 0, -1, 1, 0, 0]
 dz = [0, 0, 0, 0, 1, -1]
 
-# BFS 큐 초기화
+# 동시에 토마토가 익게하려면 익은 토마토를 처음에 다 넣어야함
 queue = deque()
 for h in range(H):
     for n in range(N):
@@ -38,6 +38,8 @@ while queue:
         if 0 <= nh < H and 0 <= nn < N and 0 <= nm < M and not visited[nh][nn][nm] and three_dimensional_array[nh][nn][nm] == 0:
             queue.append((nh, nn, nm))
             visited[nh][nn][nm] = True
+            
+            # 토마토 배열에 1을 더해주면서 익은 날짜를 표기
             three_dimensional_array[nh][nn][nm] = three_dimensional_array[h][n][m] + 1
 
 # 모든 토마토가 익었는지 확인 및 결과 계산
@@ -48,6 +50,8 @@ for h in range(H):
             if three_dimensional_array[h][n][m] == 0:
                 print(-1)
                 exit()
+                
+                # 토마토 셀 중 최댓값을 찾음
             result = max(result, three_dimensional_array[h][n][m])
 
 print(result - 1)
