@@ -14,9 +14,7 @@ for _ in range(M):
 
 def dfs(a):
     # 입력된 graph에 a가 없거나 a를 이미 방문 했을경우
-    # if not graph[a] or visited[a] == True:
-    # 입력에 없는 노드도 고립된 상태로 존재하는거임 , 위 조건 문은 맞지 않음.
-    if not graph[a] or visited[a] == True:
+    if visited[a] == True:
         return False
     stack =[a]
     visited[a]=True

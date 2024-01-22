@@ -17,7 +17,7 @@ def bfs(a, b):
     q = deque([a])
     visited[a] = True
     while q:
-        # 현재 깊이의 노드 수
+        # 한 라운드에 탐색을 시작할 노드 수
         nodeCount = len(q)
         # 현재 깊이의 노드를 처리하는 반복문 따로 생성 (한 층 계산하고 끊어주기)
         for _ in range(nodeCount):

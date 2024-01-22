@@ -19,6 +19,8 @@ dx = [-1, 1, 0, 0, 0, 0]
 dy = [0, 0, -1, 1, 0, 0]
 dz = [0, 0, 0, 0, 1, -1]
 
+
+#인덱스로 접근할때는 h , n ,m 순서 : 왜냐하면  m을 먼저넣었기 때문에
 # 동시에 토마토가 익게하려면 익은 토마토를 처음에 다 넣어야함
 queue = deque()
 for h in range(H):
@@ -53,5 +55,5 @@ for h in range(H):
                 
                 # 토마토 셀 중 최댓값을 찾음
             result = max(result, three_dimensional_array[h][n][m])
-
+ # 시작할 때를 하루걸린다고 했기 때문에 -1
 print(result - 1)

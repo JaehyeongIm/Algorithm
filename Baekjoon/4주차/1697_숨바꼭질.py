@@ -1,10 +1,11 @@
 from collections import deque
 N,K = map(int,input().split())
-visited=[0]*1000001
+visited=[0]*1000001 # 노드가 최대 100000개
 
 
 def bfs(a, b):
     queue = deque()
+    # 튜플에 현재 위치와 초 대입
     queue.append((a,0))
     visited[a]=1
     while queue:
@@ -12,9 +13,11 @@ def bfs(a, b):
         if V == b:
             return steps
         for nextNode in [V-1,V+1,2*V]:
+            # 노드가 범위 안에 있고 방문하지 않았으면 1초 추가하고 queue에 넣기
             if 0<=nextNode<100001 and  not visited[nextNode] :
                 queue.append((nextNode,steps+1))
                 visited[nextNode]=1
+    # 못 가는 경우 -1 리턴 , 이 문제의 경우 못 갈 수는 없음
     return -1
 result = bfs(N,K)
 print(result)

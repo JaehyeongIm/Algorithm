@@ -1,5 +1,4 @@
 import sys
-
 sys.setrecursionlimit(10 ** 5)
 
 N = int(input())
@@ -37,6 +36,7 @@ for i in range(N):
             output.append(houstCount)
             # ** 한 탐색의 노드 개수를 저장했으므로 count를 리셋 해줘 야함 (이 부분 뺴먹어서 고생)
             count=0
+            # 탐색 성공했으니 단지 수 1추가
             result += 1
 print(result)
 

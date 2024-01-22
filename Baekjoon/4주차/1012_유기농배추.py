@@ -18,6 +18,7 @@ def dfs(x,y):
 
 T = int(input())
 resultList=[]
+# 테스트 케이스 수 만큼 반복
 for i in range(T):
     graph = []
     M,N,K = map(int,input().split())
@@ -37,3 +38,4 @@ for i in range(T):
     resultList.append(result)
 for i in resultList:
     print(i)
+
