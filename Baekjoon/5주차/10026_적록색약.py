@@ -1,35 +1,48 @@
-from collections import deque
+import sys
+sys.setrecursionlimit(1000000)
+input = sys.stdin.readline
 
-N = int(input())
+n = int(input().rstrip())
+matrix = [list(input().rstrip()) for _ in range(n)]
+visited = [[False] * n for _ in range(n)]
 
-graph = []
-for i in range(N):
-    graph.append(input().split())
+three_cnt, two_cnt = 0, 0
+dx = [-1,1,0,0]
+dy = [0,0,-1,1]
 
-dx = [0, 0, 1, -1]
-dy = [1, -1, 0, 0]
-visited = [[False] * N for _ in range(N)]
+def dfs(x,y):
+    #현재 색상 좌표를 방문해준다.
+    visited[x][y] = True
+    current_color = matrix[x][y]
 
+    for k in range(4):
+        nx = x + dx[k]
+        ny = y + dy[k]
+        if (0 <= nx < n) and (0 <= ny < n):
+            #현재 좌표의 색상과 상하좌우 좌표에 있는 색상이 같으면 dfs로 넣어준다.
+            if visited[nx][ny]==False:
+                if matrix[nx][ny] == current_color:
+                    dfs(nx,ny)
 
-def bfs(a, b,blindness):
-    queue = deque()
-    queue.append([a,b,graph[a][b]])
-    if blindness:
-        while queue:
-            x, y, color = queue.popleft()
-            for i in range(4):
-                nx = x+dx[i]
-                ny = y + dy[i]
-                if 0 <= nx <= N - 1 and 0 <= ny <= N - 1 and visited[nx][ny] == False and graph[x][y]==graph[nx][ny]:
-                    queue.append((nx, ny))
-                    visited[nx][ny] = True
-    return True
+for i in range(n):
+    for j in range(n):
+        # 방문하지 않은 좌표이면 dfs로 넣어준다.
+        if visited[i][j]==False:
+            dfs(i,j)
+            three_cnt += 1
 
+#적록색약의 경우 R을 G로 바꾸어준다.
+for i in range(n):
+    for j in range(n):
+        if matrix[i][j]=='R':
+            matrix[i][j]='G'
 
+visited = [[False] * n for _ in range(n)]
 
+for i in range(n):
+    for j in range(n):
+        if visited[i][j] == False:
+            dfs(i,j)
+            two_cnt += 1
 
-for i in range(N):
-    for j in range(N):
-        bfs(i,j,False)
-        bfs(i,j,True)
-
+print(three_cnt,two_cnt)
