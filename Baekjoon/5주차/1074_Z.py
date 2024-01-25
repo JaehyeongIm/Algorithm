@@ -1,17 +1,32 @@
-import sys
-
-sys.setrecursionlimit(10 ** 5)
 N, r, c = map(int, input().split())
 
-# 2^N, 2^n인 2차원 배열의 r행 c열 까지 가는 최단거리 출력 (z방식)
-def sol(N, r, c):
-    if N == 0:
-        return 0
-# 2 * (r % 2) + (c % 2)는 네모칸 안에서 이동할 수 있는 범위
+ans = 0
 
-    return 2 * (r % 2) + (c % 2) + 4 * sol(N - 1, int(r / 2), int(c / 2))
+# ans에 온 거리를 기록하고 좌표 재설정, 목적지 좌표도 재설정 (2**N를 빼주기)
+# 0이 될 때 까지 반복
+while N != 0:
 
+    N -= 1
 
-print(sol(N, r, c))
+    # 1사분면
+    if r < 2 ** N and c < 2 ** N:
+        ans += ( 2 ** N ) * ( 2 ** N ) * 0
 
-# 좌표 r,c가 2배가 됨에 따라 값이 4의 배수로 확장
+    # 2사분면
+    elif r < 2 ** N and c >= 2 ** N:
+        ans += ( 2 ** N ) * ( 2 ** N ) * 1
+        c -= ( 2 ** N )
+
+    # 3사분면
+    elif r >= 2 ** N and c < 2 ** N:
+        ans += ( 2 ** N ) * ( 2 ** N ) * 2
+        r -= ( 2 ** N )
+
+    # 4사분면
+    else:
+        ans += ( 2 ** N ) * ( 2 ** N ) * 3
+        
+        r -= ( 2 ** N )
+        c -= ( 2 ** N )
+
+print(ans)
