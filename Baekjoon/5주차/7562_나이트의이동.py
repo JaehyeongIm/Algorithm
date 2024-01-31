@@ -8,7 +8,7 @@ def bfs(start, dest):
     queue = deque([[x, y]])
     visited[x][y] = True
     while queue:
-        # 시작노드에서  한번 이동한 노드 와 두번 이동한 노드를 반복문으로 나눠주고, 반복문이 끝날때 count+=1를 진행.
+        # 시작노드에서 한번 이동한 노드 와 두번 이동한 노드를 반복문으로 나눠주고, 반복문이 끝날때 count+=1를 진행.
         for _ in range(len(queue)):
             popX, popY = queue.popleft()
             if popX == a and popY == b:
