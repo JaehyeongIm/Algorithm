@@ -1,34 +1,40 @@
-# import sys
-#
-# sys.setrecursionlimit(1000000)
-# input = sys.stdin.readline
-#
-# N = int(input().rstrip())
-#
-# matrix = [["*"] * N for i in range(N)]
-#
-#
-# def recursion(size, row, column):
-#     if size == 3:
-#         matrix[row + 1][column + 1] = ""
-
 import sys
-sys.setrecursionlimit(10**6)
+sys.setrecursionlimit(1000000)
+input = sys.stdin.readline
 
-def append_star(LEN):
-    if LEN == 1:
-        return ['*']
+N = int(input().rstrip())
 
-    Stars = append_star(LEN//3)
-    L = []
+matrix = [["*"] * N for i in range(N)]
 
-    for S in Stars:
-        L.append(S*3)
-    for S in Stars:
-        L.append(S+' '*(LEN//3)+S)
-    for S in Stars:
-        L.append(S*3)
-    return L
+# length * length 행렬에서 가운데를 뚫은 패턴을 matrix에 재귀적으로 구현하는 함수
+def recursion(length, row, column):
 
-n = int(sys.stdin.readline().strip())
-print('\n'.join(append_star(n)))
+    # base condition
+    if length == 3:
+        matrix[row + 1][column + 1] = " "
+        return
+
+    # step
+    else:
+        for i in range(length // 3):
+            for j in range(length // 3):
+                # 가운데 구멍 뚫기
+                matrix[row + length // 3 + i][column + length // 3 + j] = " "
+        # 가운데르 제외한 나머지 8방향에서 재귀호출
+        recursion(length // 3, row, column)
+        recursion(length // 3, row, column + length // 3)
+        recursion(length // 3, row, column + 2 * length // 3)
+        recursion(length // 3, row + length // 3, column)
+        recursion(length // 3, row + length // 3, column + 2 * length // 3)
+        recursion(length // 3, row + 2 * length // 3, column)
+        recursion(length // 3, row + 2 * length // 3, column + length // 3)
+        recursion(length // 3, row + 2 * length // 3, column + 2 * length // 3)
+        return
+
+# 출력
+
+recursion(N, 0, 0)
+for i in range(N):
+    for j in range(N):
+        print(matrix[i][j], end="")
+    print("")

@@ -1,29 +1,33 @@
+# 배열 만들어 규칙 찾으면서 풀다가 실패
+
+import sys
+
+sys.setrecursionlimit(1000000)
+input = sys.stdin.readline
+
 n = int(input())
 
-graph = [[" ", " ", "*", " ", " "], [" ", "*", " ", "*", " "], ["*", "*", "*", "*", "*"]]
+stars = [[' '] * 2 * n for _ in range(n)]
 
 
-def recursive(N, before):
-    after = [[" "] * (2 * 2 * N - 1) for _ in range(2 * N)]
-    for i in range(N):
-        after[i][N:N+2*N-1] = before[i]
+def recursion(i, j, size):
+    if size == 3:
+        # 0행
+        stars[i][j] = '*'
+        # 1행
+        stars[i + 1][j - 1] = stars[i + 1][j + 1] = "*"
+        # 2행
+        for k in range(-2, 3):
+            stars[i + 2][j - k] = "*"
 
-    k = 0
-    for i in range(N, 2 * N):
-        after[i][:2*N] = before[k]
-        after[i][2 * N:2 * N+len(before[k])] = before[k]
-        k += 1
-
-    if 2 * N == n:
-        return after
-
-    return recursive(2 * N, after)
+    else:
+        newSize = size // 2
+        recursion(i, j, newSize)
+        recursion(i + newSize, j - newSize, newSize)
+        recursion(i + newSize, j + newSize, newSize)
 
 
-if n == 3:
-    result = graph
-else:
-    result = recursive(3, graph)
-
-for i in result:
-    print("".join(i))
+# n-1은 가운데 좌표
+recursion(0, n - 1, n)
+for star in stars:
+    print("".join(star))
