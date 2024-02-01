@@ -6,7 +6,7 @@ sys.setrecursionlimit(1000000)
 input = sys.stdin.readline
 
 n = int(input())
-
+# n * 2n 행렬 생성
 stars = [[' '] * 2 * n for _ in range(n)]
 
 

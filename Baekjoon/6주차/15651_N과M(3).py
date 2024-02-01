@@ -4,10 +4,10 @@ sys.setrecursionlimit(1000000)
 input = sys.stdin.readline
 
 N, M = map(int, input().rstrip().split())
-arr = [0] * M # 수열을 저장할 배열 (0 인덱싱)
+arr = [0] * M  # 수열을 저장할 배열 (0 인덱싱)
 
 
-# k개의 수를 택한 상황에서 arr[k] 정하고 출력하는 함수 (k: 인덱스)
+# k개의 수를 택한 상황에서 arr[k] 정해주는 함수 (k: 인덱스)
 # 중복 가능
 def recursion(k):
     # 1. 종료 지점 설정

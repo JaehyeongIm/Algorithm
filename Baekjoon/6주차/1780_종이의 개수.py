@@ -14,7 +14,7 @@ minusOneCount = 0
 plusOneCount = 0
 
 
-# matrix에 써진 -1,0,1의 개수를 기록하는 함수
+# 현재 사이즈의 행렬의 matrix에 써진 -1,0,1의 개수를 기록하는 함수
 # row,column은 시작점의 행과 열을 나타냄
 def paper(size, row, column):
     global zeroCount
@@ -32,7 +32,7 @@ def paper(size, row, column):
             plusOneCount += 1
         return
 
-    # 행렬의 요소가 다른지 같은지 확인
+    # 현재 사이즈의 행렬의 요소가 다른지 같은지 확인
     isDiffrent = False
     for i in range(size):
         for j in range(size):

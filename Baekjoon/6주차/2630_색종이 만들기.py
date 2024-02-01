@@ -22,7 +22,7 @@ def recursion(size, row, column):
         elif matrix[row][column] == 1:
             bluePaperCount += 1
         return
-    # 다른지 비교
+    # 행렬안의 요소가 다른지 비교
     isDiffrent = False
 
     for i in range(size):
@@ -32,11 +32,14 @@ def recursion(size, row, column):
                 break
         if isDiffrent:
             break
+    # 다르면 재귀
     if isDiffrent:
         recursion(size // 2, row, column)
         recursion(size // 2, row, column + size // 2)
         recursion(size // 2, row + size // 2, column)
         recursion(size // 2, row + size // 2, column + size // 2)
+        
+    # 같으면 색종이 개수 추가
     else:
         if matrix[row][column] == 0:
             whitePaperCount += 1
