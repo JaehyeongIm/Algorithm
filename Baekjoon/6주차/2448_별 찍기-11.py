@@ -26,7 +26,6 @@ def recursion(i, j, size):
         recursion(i + newSize, j - newSize, newSize)
         recursion(i + newSize, j + newSize, newSize)
 
-
 # n-1은 가운데 좌표
 recursion(0, n - 1, n)
 for star in stars:
