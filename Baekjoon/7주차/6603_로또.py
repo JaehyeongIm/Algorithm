@@ -1,30 +1,35 @@
-
 import sys
 
-input = sys.stdin.readline
 sys.setrecursionlimit(1000000)
-#depth : 현재까지 선택한 숫자의 개수
-def dfs(depth, i):
-    if depth == 6:
-        # *를 붙이면 내부 리스트의 요소들이 별도로 출력됨
-        print(*output)
+input = sys.stdin.readline
+
+def recursion(idx, count):
+    # 6개 다 뽑으면 출력
+    if count == 6:
+        print(*arr)
         return
 
-    for i in range(i, count):
-        if depth + count - i < 6: # 정답 배열에 넣으려는 인덱스를 더했을 경우 남은 요소들을 다 채워도 최종 길이를 만족하지 못한다면
-            return
-        output.append(LottoNumberList[i]) # 최종 길이를 만족할 수 있을 경우만 append
-        dfs(depth + 1, i + 1) # 재귀
-        output.pop() # 다음 요소 탐색을 위해 pop
+    # 현재 수의 다음 수부터 뽑을 수 있게 반복문 처리 => 순서, 중복 제거 (조합)
+    for i in range(idx, k):
+        arr.append(lottoNumberList[i])
+        recursion(i + 1,count+1)
+        # 해당 i 에 대한 조합 전부 생성되었으므로 pop
+        arr.pop()
+
 
 while True:
-    inputList = list(map(int, input().split()))
-    count = inputList[0]
-    LottoNumberList = inputList[1:]
-    if count == 0:
+    inputList = list(map(int, input().rstrip().split()))
+    k = inputList[0]
+    lottoNumberList = inputList[1:]
+    if k ==0:
         break
-    output = []
-    dfs(0, 0)
+    arr=[]
+    # recursion 안에서 출력
+    recursion(0,0)
+    # 테스트 케이스마다 줄바꿈
     print()
+
+
+
 
 
