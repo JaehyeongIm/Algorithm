@@ -27,6 +27,7 @@ def recursion(k):
             print()
             return
         return
+
     for i in numberList:
         if not isUsed[numberList.index(i)] :
             if k==0 or arr[k-1]< i:

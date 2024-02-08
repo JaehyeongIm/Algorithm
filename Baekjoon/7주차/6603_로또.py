@@ -9,8 +9,12 @@ def recursion(idx, count):
         print(*arr)
         return
 
+    # 입력이
+    # 1 ,2 , 3, 4, 5, 6, 7
+
+
     # 현재 수의 다음 수부터 뽑을 수 있게 반복문 처리 => 순서, 중복 제거 (조합)
-    for i in range(idx, k):
+    for i in range(idx, k): # 1 2 7
         arr.append(lottoNumberList[i])
         recursion(i + 1,count+1)
         # 해당 i 에 대한 조합 전부 생성되었으므로 pop
