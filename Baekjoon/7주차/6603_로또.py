@@ -1,46 +1,30 @@
+
 import sys
 
-sys.setrecursionlimit(1000000)
 input = sys.stdin.readline
-zero = False
-index = 0
-outputList = [[]]
-inputList = []
-# zero가 0될때까지 테스트케이스 반복
-while not zero:
-    temp = list(map(int, input().rstrip().split()))
-    if temp[0] == 0:
-        break
-    inputList.append(temp)
-
-arr = [0] * 6
-isUsed = [0] * (max(inputList) + 1)  # 중복 제거용
-
-
-# k개의 수를 택한 상황에서 arr[k] 정하고 출력하는 함수 (0인덱싱)
-def recursion(k):
-    # k 가 6이 되면 6개를 모두 골라서 수열이 만들어 지므로 출력
-    if k == 6:
-        tempList = []
-        for i in range(6):
-            tempList.append(str(arr[i]))
-        outputList[index].append(tempList)
+sys.setrecursionlimit(1000000)
+#depth : 현재까지 선택한 숫자의 개수
+def dfs(depth, i):
+    if depth == 6:
+        # *를 붙이면 내부 리스트의 요소들이 별도로 출력됨
+        print(*output)
         return
 
-    for i in inputList:
-        if not isUsed[i]:
-            # 첫번째 자리거나 i가 그 전 자리 수보다 클 때 (오름차순)
-            if k == 0 or i > arr[k - 1]:
-                arr[k] = i
-                isUsed[i] = 1
-                recursion(k + 1)
-                # 재귀가 끝나면 다시 k번째 뽑기
-                isUsed[i] = 0
+    for i in range(i, count):
+        if depth + count - i < 6: # 정답 배열에 넣으려는 인덱스를 더했을 경우 남은 요소들을 다 채워도 최종 길이를 만족하지 못한다면
+            return
+        output.append(LottoNumberList[i]) # 최종 길이를 만족할 수 있을 경우만 append
+        dfs(depth + 1, i + 1) # 재귀
+        output.pop() # 다음 요소 탐색을 위해 pop
 
-
-recursion(0)
-index += 1
-for i in outputList:
-    for j in outputList[i]:
-        print(outputList[i][j])
+while True:
+    inputList = list(map(int, input().split()))
+    count = inputList[0]
+    LottoNumberList = inputList[1:]
+    if count == 0:
+        break
+    output = []
+    dfs(0, 0)
     print()
+
+

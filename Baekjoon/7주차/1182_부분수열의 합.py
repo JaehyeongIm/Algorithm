@@ -64,6 +64,7 @@ def recursion(idx, current_sum):
         count += 1
 
     # 현재 인덱스 이후의 수들을 포함하는 부분집합 생성
+    # 현재 수의 다음 수부터 뽑을 수 있게 반복문 처리 => 순서, 중복 제거
     for i in range(idx, N):
         recursion(i + 1, current_sum + inputList[i])
 
