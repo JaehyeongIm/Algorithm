@@ -7,6 +7,7 @@ rightDiagonal=[0]* 1000000
 
 
 # (row,col)에 둘수 있는지 확인하는 함수
+# row와 col은 0인덱싱
 def recursion(row):
     global cnt
 
