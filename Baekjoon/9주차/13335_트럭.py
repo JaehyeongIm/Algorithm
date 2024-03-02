@@ -1,23 +1,22 @@
-# 나의 코드
+from collections import deque
+
 n, w, l = map(int, input().split())
-trucks = list(map(int, input().split()))
+truckList = deque(list(map(int, input().split())))
 
-bridge = [0] * w    # w만큼 다리 길이 선언
-weight, time = 0, 0    # 현재 다리위의 무게, 시간 선언
-
-while True:
-    out = bridge.pop(0)    # 방금 다리를 건넌 트럭은 다리에서 제거해야한다.
-    weight -= out    # 방금 다리 다리를 건넌 트럭의 무게를 weight에서 빼줘야 다음 트럭이 넘어 올 수 있다.
-
-    if trucks:    # 넘어 올 트럭이 남아있을 때 
-        if weight + trucks[0] <= l:    # 다리 하중을 견딜 수 있으면
-            bridge.append(trucks[0])    # 다리를 건너려는 트럭
-            weight += trucks[0]    # weight에 현재 다리를 건너려는 트럭 무게 추가
-            trucks.pop(0)
-        else:    # 다리 하중을 견딜 수 없으면
-            bridge.append(0)    # 0을 추가하여 다리위에 있는 트럭을 먼저 보낸다.
-    time += 1    # 조건과 상관없이 시간은 흘러간다.
-
-    if not bridge:    # 다리위에 트럭이 다 지나가면 반복문 종료
-        break
+bridge = deque([0] * w)
+time = 0
+weightSum = 0
+while bridge:
+    time += 1
+    # 다리 가장 앞쪽 pop하고 무게 합에서 빼기
+    weightSum -= bridge.popleft()
+    # 트럭이 남아있으면
+    if truckList:
+        if (truckList[0] + weightSum) <= l:
+            truck = truckList.popleft()
+            bridge.append(truck)
+            weightSum += truck
+        else:
+            # 트럭이 있는데 못타는 경우는 0을 채우고 트럭이 없으면 0 안 채워서 다리가 끊김
+            bridge.append(0)
 print(time)

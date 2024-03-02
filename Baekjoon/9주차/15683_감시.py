@@ -1,93 +1,72 @@
-from collections import deque
-import sys
-input = sys.stdin.readline
+# CCTV 유형별 감시 방향
+N, M = map(int, input().split())  # 사무실의 크기 입력 받기
+officeRoom = [list(map(int, input().split())) for _ in range(N)]  # 사무실의 상태 입력 받기
 
-# 사무실의 세로(N), 가로(M)
-N, M = map(int, input().split())
-space = [list(map(int, input().split())) for _ in range(N)]
+# 사무실의 상태를 나타내는 2차원 배열에서 CCTV 위치와 사각 지대(0)의 수 초기화
+cctvlist = []  # CCTV 위치 저장
+zeroCount = 0  # 사각 지대의 수
 
-# 남, 동, 북, 서 방향을 가리킴 (남쪽을 시작으로 반시계방향으로 돌아가는 순서로 되어 있음)
-dy = [1, 0, -1, 0]       # y축
-dx = [0, 1, 0, -1]       # x축
+for row in range(N):
+    for col in range(M):
+        if officeRoom[row][col] == 0:
+            zeroCount += 1
+        elif officeRoom[row][col] != 6:
+            cctvlist.append((row, col, officeRoom[row][col]))  # CCTV 위치와 유형 저장
 
-# 감시해야하는 모든 방향 (각각의 cctv별로 감시할 수 있는 방향)
-direction = {
-    1: [[0], [1], [2], [3]],            # 1번cctv 방향:0, 1, 2, 3, --> 4가지
-    2: [[0, 2], [1, 3]],                    # 2번cctv 방향:(0, 2), (1, 3) --> 2가지
-    3: [[0, 1], [1, 2], [2, 3], [3, 0]],    # 3번cctv 방향:(0, 1), (1, 2), (2, 3), (3, 0) --> 4가지
-    4: [[0, 1, 2], [1, 2, 3], [2, 3, 0], [3, 0, 1]],    # 4번cctv 방향... 4가지
-    5: [[0, 1, 2, 3]]                      # 5번cctv 방향... 1가지
+# CCTV 유형별 감시 방향 설정
+directions = {
+    # 0, 1, 2, 3  = 상. 우, 하, 좌
+    1: [[0], [1], [2], [3]],
+    2: [[0, 2], [1, 3]],
+    3: [[0, 1], [1, 2], [2, 3], [3, 0]],
+    4: [[0, 1, 2], [1, 2, 3], [2, 3, 0], [3, 0, 1]],
+    5: [[0, 1, 2, 3]],
 }
 
-# 사무실의 범위를 벗어나는지 체크해주는 함수
-def check(row, col):
-    return row < 0 or row >=N or col < 0 or col >=M
+dx = [-1, 0, 1, 0]  # 상, 우, 하, 좌 이동
+dy = [0, 1, 0, -1]
 
 
-def init():
-    obj = deque() #  cctv의 위치를 저장할 큐
-    answer = 0
-    for i in range(N):
-        for j in range(M):
-            # 벽이아니고 빈칸이아니면
-            if space[i][j] != 6 and space[i][j] != 0:
-                obj.append((space[i][j], i, j))   # cctv번호, cctv 좌표 저장
-            # cctv가 아에 없는 경우도 고려해서 빈칸의 갯수로 맞춰둠
-            if space[i][j] == 0:answer += 1
-    return obj, answer
-
-# cctv좌표들, 빈칸 개수 초기화
-cctv, answer = init()
-
-
-def move(y, x, direc, space_copy):
-    # 각각의 방향에 대해서 전부 이동시켜줌
-    for d in direc:
-        ny, nx = y, x
-
+# 감시 가능 영역 표시 함수
+# 감시 가능 영역 표시 및 감시된 영역의 수를 반환하는 함수
+def watch(x, y, direction, temp_isUsed):
+    # watched : 탐색한 방의 수
+    watched = 0
+    # ex. 3번 타입의 cctv direction은 [0,1]
+    for d in direction:
+        nx, ny = x, y
         while True:
             nx += dx[d]
             ny += dy[d]
-            # 범위를 벗어났거나 벽을 만났다면
-            if check(ny, nx) or space_copy[ny][nx] == 6:
+            if nx < 0 or nx >= N or ny < 0 or ny >= M or officeRoom[nx][ny] == 6:
                 break
-            # 빈칸이아니면
-            if space_copy[ny][nx] != 0:
-                continue
-            space_copy[ny][nx] = '#'
+            if officeRoom[nx][ny] == 0 and not temp_isUsed[nx][ny]:
+                temp_isUsed[nx][ny] = True
+                watched += 1
+    return watched
 
 
-# 사각지대를 구하는 함수
-def zero_cnt(space_copy):
-    global answer
-    cnt = 0
-    for i in space_copy:
-        cnt += i.count(0)
-    answer = min(answer, cnt)
+# 재귀 함수 내에서 감시 영역을 계산하고 zeroCount를 업데이트
+def recursion(cur, isUsed, zeroCount):
+    global min_zero
+    if cur == len(cctvlist):
+        min_zero = min(min_zero, zeroCount)
+        return
+
+    x, y, cctvType = cctvlist[cur]
+    # direction = 특정 타입의 cctv의 한 방향
+    for direction in directions[cctvType]:
+        # isUsed 복사 (각자의 재귀 마다 독립적인 isUsed만들어주기)
+        temp_isUsed = [row[:] for row in isUsed]
+
+        # watched는 해당 cctv type의 한 direction에 대해 탐색 처리 하고 탐색한 방의 수를 리턴
+        watched = watch(x, y, direction, temp_isUsed)
+        recursion(cur + 1, temp_isUsed, zeroCount - watched)  # watched만큼 사각지대 수 감소
 
 
-# 백준 15651 N과 M(3) 문제와 유사 (백트래킹)
-def dfs(level, space):
-    # space_copy = copy.deepcopy(space)
-    space_copy = [[j for j in space[i]] for i in range(N)]
-    # 2번째 상태가 실행되기전 바로 전 상태를 저장함
-    # (예를 들어 2번째 상태를 시작하기 전에 1번째 상태의 결과를 저장함)
+min_zero = 1000000  # 사각 지대의 최소 크기를 저장할 변수
+isUsed = [[False] * M for _ in range(N)]  # 감시 영역을 표시할 2차원 배열
 
-    if level == len(cctv):
-        zero_cnt(space_copy)
-        return			# 전 상태로 돌아감
+recursion(0, isUsed, zeroCount)  # 재귀 함수 실행
 
-    number, y, x  = cctv[level]
-
-    # number번째 cctv에 대해 가능한 모든 방향을 순차적으로 고려
-    for d in direction[number]:
-        move(y, x, d, space_copy)
-        dfs(level+1, space_copy)   # level+1번째 cctv를 고려
-        space_copy = [[j for j in space[i]] for i in range(N)]
-        # space_copy = copy.deepcopy(space)
-
-        # 하나의 상태를 return 한다음 바로 전 상태로 바꿈
-        # 만약 2번째 상태가 끝났다면,  1번째를 수행했을 때의 결과로 바꿈
-
-dfs(0, space)
-print(answer)
+print(min_zero)  # 최소 사각 지대의 크기 출력

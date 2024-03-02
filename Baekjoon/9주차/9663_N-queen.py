@@ -26,6 +26,9 @@ def recursion(row):
         leftDiagonal[row+col]=0
         rightDiagonal[row-col+N-1] = 0
 
+        # row+col
+        # row-col
+
 
 recursion(0)
 print(cnt)
