@@ -9,10 +9,7 @@ maps = [list(map(int, input().split())) for _ in range(n)]
 command = list(map(int, input().split()))
 dice = [0] * 6
 
-### 문제 이해하는 시간이 오래 걸렸다
-### 주사위를 집어 올린다고 생각했다 처음엔
-## 하지만! 방향에 따라 굴린다!
-### 주사위를 굴리고난 후 숫자를 변경해줌.
+
 for d in command:
     nx = x + dr[d]
     ny = y + dc[d]
@@ -20,10 +17,9 @@ for d in command:
     if not 0 <= nx < n or not 0 <= ny < m:      ## 범위 밖에 있는 좌표면 continue
         continue
 
-    ## 헷갈리기 때문에 방향으로 명시해줌
     east, west, south, north, up, down = dice[0], dice[1], dice[2], dice[3], dice[4], dice[5]
 
-    ### 방향에 따라 주사위 굴리기~~~!!
+    ### 방향에 따라 주사위 굴리기
     if d == 1:
         dice[0], dice[1], dice[4], dice[5] = down, up, east, west
     elif d == 2:
@@ -41,6 +37,6 @@ for d in command:
         dice[5] = maps[nx][ny]
         maps[nx][ny] = 0
 
-    ## 꼭 값을 갱신해주기!
+    ## 값 갯ㅇ신
     x, y = nx, ny
     print(dice[4])
