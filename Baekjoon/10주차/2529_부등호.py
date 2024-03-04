@@ -1,35 +1,48 @@
-# 부등호 조건을 체크하는 함수
-def get_num(x, y, oper):
-    if oper == '<':
-        if x > y :
-            return False
-    else:
-        if x < y:
-            return False
-    return True
+import sys
 
-def dfs(idx, num):
-    if idx == k+1:
-        ans.append(num)
-        return
+sys.setrecursionlimit(1000000)
 
-    for i in range(10):
-        if not check[i]:
-            if idx == 0 or get_num(num[idx-1], str(i), oper[idx-1]):
-                check[i] = True
-                dfs(idx + 1, num + str(i))
-                check[i] = False
 
 k = int(input())
-oper = list(input().split())
+inequalitySignList = input().split()
+#결과 배열
+result=[]
+# 만들어가는 배열
+stringArray=[]
+isUsed = [False for i in range(10)]
 
-check = [False] * 10
-ans = []
-dfs(0, '')
+def inequiltySignIsOk(x,y,operation):
+    if operation == ">":
+        if x>y:
+            return True
+        else:
+            return False
+    else:
+        if x>y:
+            return False
+        else:
+            return True
 
-ans.sort()
-# 가장 늦게 추가된 것이 최대, 빨리 추가된 이 최소
-print(ans[-1])
-print(ans[0])
+#cur: 재귀 횟수
+def dfs(cur):
+    if cur== k+1:
+        result.append(''.join(map(str, stringArray)));
+        return
+    # i가 0일때는 stringArray에 대해 인덱스 -1에 접근하니까 i==0 일때 조건 추가
+    for i in range(10):
+        if cur == 0 or (not isUsed[i] and inequiltySignIsOk(stringArray[cur-1],i,inequalitySignList[cur-1])):
+            isUsed[i]=True
+            stringArray.append(i)
+            dfs(cur+1)
+            stringArray.pop()
+            isUsed[i]=False
+
+dfs(0)
+#최댓값, 최솟값 계산 따로 NO , 가장 처음에 성립한 숫자 배열이 최소, 나중이 최대임
+print(result[-1])
+print(result[0])
+
+
+
 
 
