@@ -10,7 +10,7 @@ for i in range(T):
 
     start = 0
     count = 0
-
+    # A를 기준으로 비교
     for j in range(N):
         while True:
 

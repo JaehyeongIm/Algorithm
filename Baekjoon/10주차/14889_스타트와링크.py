@@ -1,4 +1,4 @@
-# ✨ 입력
+#  입력
 import sys
 input = sys.stdin.readline
 N = int(input())
@@ -8,12 +8,13 @@ visited = [False for _ in range(N)]
 res = 10000000000
 
 
-# ✨ DFS
+# DFS
 def dfs(peopleCount,idx):
     global res
     if peopleCount == N//2:
         A = 0
         B = 0
+        # 방문한 곳에 대해 (A 인원) 능력치 합 더하기
         for i in range(N):
             for j in range(N):
                 if visited[i] and visited[j]:
@@ -22,7 +23,6 @@ def dfs(peopleCount,idx):
                     B += board[i][j]
         res = min(res, abs(A-B))
         return
-    # 중복 허용x, 순서고려 x (idx부터 시작)
     for i in range(idx,N):
         if not visited[i]:
             visited[i] = True
