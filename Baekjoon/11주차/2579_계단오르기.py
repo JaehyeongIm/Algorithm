@@ -1,0 +1,20 @@
+N = int(input())
+stair = []
+# D[i] 정의 : i칸을 밟았을때 그때까지의 최댓값, 세번 연속 x
+for _ in range(N):
+    stair.append(int(input()))
+DP = [0] * N
+# DP[0] = stair[0]
+# DP[1] = stair[0] + stair[1]
+# DP[2] = max(stair[0] + stair[2], stair[1] + stair[2])
+# N이 2이하일때도 고려해야함
+if N >= 1:
+    DP[0] = stair[0]
+if N >= 2:
+    DP[1] = stair[0] + stair[1]
+if N >= 3:
+    DP[2] = max(stair[0] + stair[2], stair[1] + stair[2])
+
+for i in range(3, N):
+    DP[i] = max(DP[i - 3] + stair[i - 1] + stair[i], DP[i - 2] + stair[i])
+print(DP[N - 1])
