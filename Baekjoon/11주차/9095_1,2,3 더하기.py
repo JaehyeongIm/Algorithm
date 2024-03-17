@@ -4,9 +4,8 @@ def countNumber(n):
     if n < 0:
         return 0
     return countNumber(n-1) + countNumber(n-2) + countNumber(n-3)
-# 1,2 =1 , 3 = 3
+# 4= 1,1,1,1 / 1 1 2 / 2 2 / 3 1 / 2 1 1 / 1 2 1 /1 3
 
-# 5 4 3 2
 T = int(input())
 results = []
 
