@@ -1,17 +1,23 @@
-def countNumber(n):
-    if n == 0:
-        return 1
-    if n < 0:
-        return 0
-    return countNumber(n-1) + countNumber(n-2) + countNumber(n-3)
-# 4= 1,1,1,1 / 1 1 2 / 2 2 / 3 1 / 2 1 1 / 1 2 1 /1 3
-
 T = int(input())
-results = []
+result=[]
 
 for _ in range(T):
-    number = int(input())
-    results.append(countNumber(number))
+    inputNumber = int(input())
+    DP=[0] *(inputNumber+1)
+    if inputNumber >=1:
+        DP[1] = 1
+    if inputNumber >=2:
+        DP[2] = 2
+    if inputNumber>=3:
+        DP[3] = 4
+    if inputNumber >=4:
+        for i in range(4, len(DP)):
+            DP[i] = DP[i-1]+DP[i-2]+DP[i-3]
 
-for result in results:
-    print(result)
+    result.append(DP[inputNumber])
+
+for i in result:
+    print(i)
+
+
+
