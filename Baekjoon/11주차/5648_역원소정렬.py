@@ -10,6 +10,7 @@ for i in range(len(restList)):
         restList[i] = restList[i][1:]
 numbers = []
 numbers.extend(restList)
+
 # 2. 입력 : 두번째 줄부터
 while len(numbers) < N:
     temp = input().split()

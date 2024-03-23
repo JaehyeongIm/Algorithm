@@ -4,10 +4,7 @@ stair = []
 for _ in range(N):
     stair.append(int(input()))
 DP = [0] * N
-# DP[0] = stair[0]
-# DP[1] = stair[0] + stair[1]
-# DP[2] = max(stair[0] + stair[2], stair[1] + stair[2])
-# N이 2이하일때도 고려해야함
+
 if N >= 1:
     DP[0] = stair[0]
 if N >= 2:
@@ -15,6 +12,7 @@ if N >= 2:
 if N >= 3:
     DP[2] = max(stair[0] + stair[2], stair[1] + stair[2])
 
+
 for i in range(3, N):
-    DP[i] = max(DP[i - 3] + stair[i - 1] + stair[i], DP[i - 2] + stair[i])
+    DP[i] = max(DP[i - 3] + stair[i - 1] + stair[i], DP[i - 2] + stair[i]) # 두가지 경우로 나눔. i-3과 i-2 계단 밟을때
 print(DP[N - 1])
