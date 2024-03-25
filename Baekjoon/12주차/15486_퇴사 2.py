@@ -1,6 +1,7 @@
+# 블로그 참고
 import sys
 
-input = lambda: sys.stdin.readline().rstrip()
+input = sys.stdin.readline
 
 n = int(input())
 t, p = [0 for _ in range(n + 1)], [0 for _ in range(n + 1)]
@@ -9,10 +10,10 @@ for i in range(1, n + 1):
 
 dp = [0 for _ in range(n + 1)]
 
+#dp[i] i일까지의 최대수익
 for i in range(1, n + 1):
-    dp[i] = max(dp[i], dp[i - 1])  # 이전까지의 최댓값
-    fin_date = i + t[i] - 1  # 당일 포함
-    if fin_date <= n:  # 최종일 안에 일이 끝나는 경우
-        # i일부터는 일을 해야하므로 i일에 얻을 수 있는 최댓값이 아닌 i-1일까지 얻을 수 있는 최댓값을 구한다
-        dp[fin_date] = max(dp[fin_date], dp[i - 1] + p[i])
+    dp[i] = max(dp[i], dp[i - 1])  # 이전에 반복문에서 계산해논 DP를 이용하여 i일에 상담 안해도 되는 경우 처리
+    fin_date = i + t[i] - 1  # 끝나는 날짜
+    if fin_date <= n:  #끝나는 날짜가 최종일 전일떄
+        dp[fin_date] = max(dp[fin_date], dp[i - 1] + p[i]) #매개변수 1:상담 미포함 2: 상담 포함
 print(max(dp))

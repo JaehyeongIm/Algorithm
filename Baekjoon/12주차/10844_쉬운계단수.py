@@ -2,7 +2,7 @@ N = int(input())
 
 # DP[i][j] , i자리 숫자에서 숫자 j로 끝나는 계단수 개수
 DP = [[0]*10 for _ in range(N+1)]
-for i in range(1,10): #초기값 설정
+for i in range(1,10): #초기값 설정 (0이 없는 특수한 경우)
     DP[1][i]=1
 if N>=2:
     for i in range(2,N+1):
