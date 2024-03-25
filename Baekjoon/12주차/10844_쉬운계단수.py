@@ -1,12 +1,20 @@
 N = int(input())
 
-# 모두 + 일때는 어디에 쳐도 상관 없음
-# 하나가 -일경우 - 뒤에서 쳐야함
-#
-# DP[i] , i번째 자리수까지의 계단수 개수
-DP = [0] * (N+1)
-DP[1] = 9
+# DP[i][j] , i자리 숫자에서 숫자 j로 끝나는 계단수 개수
+DP = [[0]*10 for _ in range(N+1)]
+for i in range(1,10): #초기값 설정
+    DP[1][i]=1
 if N>=2:
     for i in range(2,N+1):
-        DP[i] = DP[i-1]*2 -1 # 9인경우 떄문에 1뺴줘야함
-print(DP[N] % 1000000000)
+        for j in range(10):
+            if j == 0:
+                DP[i][j] = DP[i-1][j+1]
+            elif j == 9:
+                DP[i][j] = DP[i-1][j-1]
+            else:
+                DP[i][j] = DP[i-1][j-1] + DP[i-1][j+1]
+
+result =0
+for i in range(10):
+    result += DP[N][i]
+print(result % 1000000000)
