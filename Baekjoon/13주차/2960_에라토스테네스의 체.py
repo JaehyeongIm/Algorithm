@@ -1,26 +1,11 @@
-from collections import deque
 
-N, K = list(map(int, input().split()))
-# 1초 : 1억 , O(n^2) 됨 1000, 1000
-numberList = deque([])
+N, K = map(int, input().split())
+tmp = 0
+sieve = [True] * (N + 1)
 for i in range(2, N + 1):
-    numberList.append(i)
-print(numberList)
-cnt = 0
-while True:
-    number = numberList.popleft()
-    cnt += 1
-    j = 2
-    if cnt == K:
-        break
-    while True:  # 배수 지우기
-        for i in range(len(numberList)):
-            if numberList[i] == number * j:
-                numberList.remove(number * j)
-                cnt += 1
-                j += 1
-                break
-        if cnt == K:
-            break
-
-print(cnt)
+    for j in range(i, N + 1, i):
+        if sieve[j] != False:
+            sieve[j] = False
+            tmp += 1
+            if tmp == K:
+                print(j)

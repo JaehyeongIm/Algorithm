@@ -8,7 +8,7 @@ DP[1][1] = 1
 
 if N>=2:
     for i in range(2,N+1):
-        DP[i][0] = DP[i-1][1] + DP[i-1][0]
-        DP[i][1] = DP[i-1][0]
+        DP[i][0] = DP[i-1][1] + DP[i-1][0] #0으로 끝나는수
+        DP[i][1] = DP[i-1][0] # 1으로 끝나는 수
 print(DP[N][0]+DP[N][1])
 

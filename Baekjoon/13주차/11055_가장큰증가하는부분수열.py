@@ -29,11 +29,13 @@ d = [0] * N
 
 d[0] = A[0]
 
-for i in range(N):
+for i in range(N): #d를 갱신
     for j in range(i):
-        if A[i] > A[j]:
+        
+        if A[i] > A[j]: # A[j]를 마지막으로 하는 부분수열 뒤에 A[i]를 추가하여 부분수열의 합을 증가시킬 수 있음
             d[i] = max(d[i], d[j] + A[i])
+
         else:
             d[i] = max(d[i], A[i])
-
+        print(d)
 print(max(d))
