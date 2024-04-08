@@ -1,7 +1,7 @@
-nA, nB = map(int, input().split())
+A,B = map(int, input().split())
 
-A = set(map(int, input().split()))
-B = set(map(int, input().split()))
+Aset = set(map(int, input().split()))
+Bset = set(map(int, input().split()))
 
-print(len(A - B))  # 차집합의 길이를 출력
-print(*sorted(list(A - B)))  # 차집합의 원소를 출력
+print(len(Aset - Bset))
+print(*sorted(list(Aset - Bset)))  # Set에서 A-B를 지원함.
