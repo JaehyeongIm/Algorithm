@@ -6,7 +6,7 @@ for _ in range(T):
     stocks.reverse() #뒤의 값에 따라 앞의 연산이 결정되기 떄문에 뒤집기
     resultValue = 0
     maxValue=stocks[0]
-    # 10 8 3 5
+    # 1 1 3 1 2
     for i in range(day):
         if maxValue>=stocks[i]:
             resultValue += maxValue-stocks[i]

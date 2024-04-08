@@ -1,4 +1,4 @@
-
+# 블로그 참고
 N, K = map(int, input().split())
 tmp = 0
 sieve = [True] * (N + 1)

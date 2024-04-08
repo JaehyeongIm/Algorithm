@@ -22,7 +22,7 @@
 #
 # print(max(DP[N-1][0],DP[N-1][1]))
 #
-
+# 블로그 참고
 N = int(input())
 A = list(map(int, input().split()))
 d = [0] * N

@@ -1,7 +1,8 @@
+# 블로그 참고
 # n : 데이터의 크기
 n = int(input())
 
-# plus : 양수 데이터 리스트, minus : 음수 데이터 리스트
+# plus : 양수 리스트, minus : 음수 리스트
 plus = []
 minus = []
 
