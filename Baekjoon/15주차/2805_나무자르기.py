@@ -1,17 +1,19 @@
+#이분탐색
+
 N, M = list(map(int,input().split()))
-treeHeights = list(map(int,input().split()))
+treeList = list(map(int,input().split()))
 #톱날의 높이 설정
 start=1
-end = max(treeHeights)
+end = max(treeList)
 
 #절단기에 설정할 수 있는 높이의 최댓값
 while start<=end:
     mid = (start+end) // 2
     treeSum = 0
     # 나뭇가지 길이 합계 더하기
-    for treeHeight in treeHeights:
-        if treeHeight>=mid: # 크면 자르고 treeSum에 더하기
-            treeSum += treeHeight - mid
+    for tree in treeList:
+        if tree>=mid: # 크면 자르고 treeSum에 더하기
+            treeSum += tree - mid
 
     if treeSum >= M: # 잘린 나무의 길이가 M보다 크다면 절단기의 높이가 더 높아도 되는지 확인하기 위해 start 조정
         start = mid +1
