@@ -13,7 +13,7 @@ while start <= end:
     for snack in snacks:
         total += snack // mid
     if total >= m:
-        res = max(res, mid)
+        res = max(res, mid) # res은 결과
         start = mid + 1
     elif total < m:
         end = mid - 1
