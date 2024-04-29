@@ -1,15 +1,17 @@
+from collections import defaultdict
+
 N, K = map(int, input().split())
 numbers = list(map(int, input().split()))
 left, right = 0, 0
 
-counter = [0] * (max(numbers) + 1)
-answer = 0
+count = defaultdict(int)
+result = 0
 while right < N:
-    if counter[numbers[right]] < K:
-        counter[numbers[right]] += 1
+    if count[numbers[right]] < K:
+        count[numbers[right]] += 1
         right += 1
     else:
-        counter[numbers[left]] -= 1
+        count[numbers[left]] -= 1
         left += 1
-    answer = max(answer, right - left)
-print(answer)
+    result = max(result, right - left)
+print(result)
