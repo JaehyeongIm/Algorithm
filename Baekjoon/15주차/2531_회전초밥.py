@@ -7,6 +7,7 @@ sushi_count = defaultdict(int) # 자동초기화 dict
 maxSushi = 0
 sushi_count[c] +=1 # 쿠폰 초밥은 하나 더 먹을 수 있음
 
+sushi_count[1000000] +=1 # 0, 1
 # 초기 설정
 for i in range(k):
     sushi_count[sushiList[i]] += 1
@@ -23,6 +24,8 @@ for start in range(N):
     # 다음 초밥 선정
     next_sushi = sushiList[(start+k)%N] # N 초과시 한바퀴 도는 효과
     sushi_count[next_sushi] += 1
+
+    print(sushi_count)
 print(maxSushi)
 
 

@@ -1,3 +1,4 @@
+#이해 불가
 import sys
 input = sys.stdin.read
 
