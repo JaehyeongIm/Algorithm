@@ -3,30 +3,46 @@ import heapq
 from collections import defaultdict
 
 input = sys.stdin.readline
-T = int(input().rstrip())
-MaxQueue=[]
-MinQueue=[]
-count = defaultdict(int)
+T=int(input())
+
+results = []
+
 for _ in range(T):
-    k = input().rstrip()
+    k = int(input())
+    maxQueue = []
+    minQueue = []
+    count = defaultdict(int)
+
     for _ in range(k):
-        char, n = input().rstrip().split()
-        if char == "D":
-            if n == "1" :
-                maxValue = heapq.heappop(MaxQueue)
-                count[maxValue] -=1
-            elif n == "-1" :
-                minValue = heapq.heappop(MinQueue)
-                count[minValue] -=1
+        char, n = input().split()
+        n = int(n)
+        if char == "I":
+            heapq.heappush(maxQueue, (-n, n))
+            heapq.heappush(minQueue, n)
+            count[n] += 1
+        elif char == "D":
+            if n == 1:
+                while maxQueue and count[maxQueue[0][1]] == 0:
+                    heapq.heappop(maxQueue)
+                if maxQueue:
+                    value = heapq.heappop(maxQueue)[1]
+                    count[value] -= 1
+            elif n == -1:
+                while minQueue and count[minQueue[0]] == 0:
+                    heapq.heappop(minQueue)
+                if minQueue:
+                    value = heapq.heappop(minQueue)
+                    count[value] -= 1
+    # 결과 출력을 위한 작업
+    while maxQueue and count[maxQueue[0][1]] == 0:
+        heapq.heappop(maxQueue)
+    while minQueue and count[minQueue[0]] == 0:
+        heapq.heappop(minQueue)
 
-        elif char == "I":
-            if n>=0:
+    if not maxQueue or not minQueue:
+        results.append("EMPTY")
+    else:
+        results.append(f"{maxQueue[0][1]} {minQueue[0]}")
 
-
-            else:
-            heapq.heappush(MaxQueue,(-n, n))
-            heapq.heappush(MinQueue,(n, n))  #
-
-
-
-
+for result in results:
+    print(result)
