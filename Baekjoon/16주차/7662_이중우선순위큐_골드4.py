@@ -12,7 +12,7 @@ for _ in range(T):
     maxQueue = []
     minQueue = []
     count = defaultdict(int)
-
+    # 28 28 / 1 , 28  / 0     28 - 0
     for _ in range(k):
         char, n = input().split()
         n = int(n)
